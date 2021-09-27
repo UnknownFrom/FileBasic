@@ -1,7 +1,7 @@
 package Task2;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class Faculty implements IFaculty{
     }
 
     @Override
-    public void NotifyStudent() {
+    public void NotifyStudent() throws IOException {
         for (IStudent student: students) {
             student.ToNotify(name);
         }

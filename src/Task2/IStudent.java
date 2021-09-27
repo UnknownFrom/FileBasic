@@ -1,7 +1,6 @@
 package Task2;
 
 import java.io.IOException;
-import java.util.Dictionary;
 import java.util.HashMap;
 
 public interface IStudent {
