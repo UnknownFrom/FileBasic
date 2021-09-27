@@ -29,7 +29,9 @@ public class Faculty implements IFaculty{
 
     @Override
     public void AddStudent(IStudent stud) {
-        students.add(stud);
+        if (!students.contains(stud)) {
+            students.add(stud);
+        }
     }
 
     @Override

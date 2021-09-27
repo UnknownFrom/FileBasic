@@ -20,7 +20,9 @@ public class Student implements IStudent {
     @Override
     public void AddFaculties(String fac)
     {
-        faculties.add(fac);
+        if(!faculties.contains(fac)) {
+            faculties.add(fac);
+        }
     }
 
     @Override
