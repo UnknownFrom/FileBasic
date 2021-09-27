@@ -3,6 +3,10 @@ package Task2;
 import java.io.*;
 import java.util.HashMap;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -25,9 +29,30 @@ public class Programm {
         university.NotifyFaculty(); /*высылаем оповещения по всем факультетам*/
     }
 
-    public static void ToReadFronJSON(IUniversity university, String path) throws FileNotFoundException {
-        FileReader reader = new FileReader(new File(path));
+    public static void ToFillFacultiesFromJSON(IUniversity university, String path) throws IOException, ParseException {
+        BufferedReader reader = new BufferedReader((Reader)ToReadFromJSON(university, path));
+        String s;
+        while ((s = reader.readLine()) != null) { /*считываем и добавляем всю информацию о факультете*/
+            String[] spl = s.split(" ");
+            university.AddFaculty(ToCreateFaculty(spl));
+        }
+    }
 
+    public static void ToFillStudentsFromJSON(IUniversity university, String path) throws IOException, ParseException {
+        BufferedReader reader = new BufferedReader((Reader)ToReadFromJSON(university, path));
+        String s;
+        while ((s = reader.readLine()) != null) { /*считываем и добавляем всю информацию о студенте*/
+            String[] spl = s.split(" ");
+            university.CheckingSuitableFaculties(ToCreateStudents(spl));
+        }
+    }
+
+    public static void ToReadFromJSON(IUniversity university, String path) throws IOException, ParseException {
+        FileReader reader = new FileReader(new File(path));
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+        HashMap<String, Integer> discipline = (HashMap<String, Integer>) jsonObject.get("disciplines");
+        university.CheckingSuitableFaculties(new Student((String) jsonObject.get("name"),discipline));
     }
 
     public static void ToReadFromXML(IUniversity university, String path) throws ParserConfigurationException, IOException, SAXException {
