@@ -18,44 +18,87 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 public class Programm {
 
-    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, ParseException {
         IUniversity university = new University();
         //ToFillFaculties(university,"C:\\Users\\Pavel\\OneDrive - vyatsu\\5 семестр\\Java\\Lab 2\\src\\Task2\\faculty.TXT");
         //ToFillStudents(university, "C:\\Users\\Pavel\\OneDrive - vyatsu\\5 семестр\\Java\\Lab 2\\src\\Task2\\students.TXT");
-        ToReadFromXML(university, "C:\\Users\\Pavel\\OneDrive - vyatsu\\5 семестр\\Java\\Lab 2\\src\\Task2\\all.xml");
+        //ToReadFacultiesFromXML(university,"C:\\Users\\Pavel\\OneDrive - vyatsu\\5 семестр\\Java\\Lab 2\\src\\Task2\\faculty.xml");
+        //ToReadStudentsFromXML(university,"C:\\Users\\Pavel\\OneDrive - vyatsu\\5 семестр\\Java\\Lab 2\\src\\Task2\\students.xml");
+        ToReadFacultiesFromJSON(university,"C:\\Users\\Pavel\\OneDrive - vyatsu\\5 семестр\\Java\\Lab 2\\src\\Task2\\faculty2.json");
+        ToReadStudentsFromJSON(university,"C:\\Users\\Pavel\\OneDrive - vyatsu\\5 семестр\\Java\\Lab 2\\src\\Task2\\students2.json");
         university.NotifyFaculty(); /*высылаем оповещения по всем факультетам*/
     }
 
-    public static void ToFillFacultiesFromJSON(IUniversity university, String path) throws IOException, ParseException {
-        BufferedReader reader = new BufferedReader((Reader)ToReadFromJSON(university, path));
-        String s;
-        while ((s = reader.readLine()) != null) { /*считываем и добавляем всю информацию о факультете*/
-            String[] spl = s.split(" ");
-            university.AddFaculty(ToCreateFaculty(spl));
-        }
-    }
-
-    public static void ToFillStudentsFromJSON(IUniversity university, String path) throws IOException, ParseException {
-        BufferedReader reader = new BufferedReader((Reader)ToReadFromJSON(university, path));
-        String s;
-        while ((s = reader.readLine()) != null) { /*считываем и добавляем всю информацию о студенте*/
-            String[] spl = s.split(" ");
-            university.CheckingSuitableFaculties(ToCreateStudents(spl));
-        }
-    }
-
-    public static void ToReadFromJSON(IUniversity university, String path) throws IOException, ParseException {
+    public static void ToReadStudentsFromJSON(IUniversity university, String path) throws IOException, ParseException {
         FileReader reader = new FileReader(new File(path));
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
-        HashMap<String, Integer> discipline = (HashMap<String, Integer>) jsonObject.get("disciplines");
-        university.CheckingSuitableFaculties(new Student((String) jsonObject.get("name"),discipline));
+        JSONArray disciplineJ = (JSONArray) jsonObject.get("students");
+        HashMap<String, Integer> discipline = new HashMap<>();
+        Iterator i = disciplineJ.iterator();
+        while(i.hasNext())
+        {
+            JSONObject obj = (JSONObject)i.next();
+            String name = (String)obj.get("name");
+            String[]dis = ((String)obj.get("discipline")).split(" ");
+            for (int k = 0; k < dis.length; k+=2)
+            {
+                discipline.put(dis[k],Integer.parseInt(dis[k+1]));
+            }
+            university.CheckingSuitableFaculties(new Student(name,discipline));
+        }
     }
 
-    public static void ToReadFromXML(IUniversity university, String path) throws ParserConfigurationException, IOException, SAXException {
+    public static void ToReadFacultiesFromJSON(IUniversity university, String path) throws IOException, ParseException {
+        FileReader reader = new FileReader(new File(path));
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+        JSONArray disciplineJ = (JSONArray) jsonObject.get("faculties");
+        HashMap<String, Integer> disciplines = new HashMap<>();
+        Iterator i = disciplineJ.iterator();
+        while(i.hasNext())
+        {
+            JSONObject obj = (JSONObject)i.next();
+            String name = (String)obj.get("name");
+            String[]dis = ((String)obj.get("discipline")).split(" ");
+            for (int k = 0; k < dis.length; k+=2)
+            {
+                disciplines.put(dis[k],Integer.parseInt(dis[k+1]));
+            }
+            university.AddFaculty(new Faculty(name, disciplines));
+        }
+    }
+
+    public static void ToReadStudentsFromXML(IUniversity university, String path) throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(new File(path));
+
+        /*получение списка всех элементов student*/
+        NodeList studentsElements = document.getDocumentElement().getElementsByTagName("student");
+
+        /*перебор всех элементов students*/
+        for(int i = 0; i < studentsElements.getLength(); i++)
+        {
+            Node student = studentsElements.item(i);
+            NamedNodeMap attributes = student.getAttributes();
+            HashMap<String, Integer> disciplines = new HashMap<>();
+            String name = attributes.getNamedItem("name").getNodeValue();
+            String[] discipline = attributes.getNamedItem("disciplines").getNodeValue().split(" ");
+            String[] score = attributes.getNamedItem("scores").getNodeValue().split(" ");
+            for (int k = 0; k < discipline.length; k++)
+            {
+                disciplines.put(discipline[k],Integer.parseInt(score[k]));
+            }
+            university.CheckingSuitableFaculties(new Student(name, disciplines));
+        }
+    }
+
+    public static void ToReadFacultiesFromXML(IUniversity university, String path) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(new File(path));
@@ -77,25 +120,6 @@ public class Programm {
                 disciplines.put(discipline[k],Integer.parseInt(score[k]));
             }
             university.AddFaculty(new Faculty(name, disciplines));
-        }
-
-        /*получение списка всех элементов student*/
-        NodeList studentsElements = document.getDocumentElement().getElementsByTagName("student");
-
-        /*перебор всех элементов students*/
-        for(int i = 0; i < studentsElements.getLength(); i++)
-        {
-            Node student = studentsElements.item(i);
-            NamedNodeMap attributes = student.getAttributes();
-            HashMap<String, Integer> disciplines = new HashMap<>();
-            String name = attributes.getNamedItem("name").getNodeValue();
-            String[] discipline = attributes.getNamedItem("disciplines").getNodeValue().split(" ");
-            String[] score = attributes.getNamedItem("scores").getNodeValue().split(" ");
-            for (int k = 0; k < discipline.length; k++)
-            {
-                disciplines.put(discipline[k],Integer.parseInt(score[k]));
-            }
-            university.CheckingSuitableFaculties(new Student(name, disciplines));
         }
     }
 
