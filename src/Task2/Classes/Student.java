@@ -1,5 +1,6 @@
-package Task2;
+package Task2.Classes;
 
+import Task2.Interface.IStudent;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;

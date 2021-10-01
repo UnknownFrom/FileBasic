@@ -1,5 +1,7 @@
-package Task2;
+package Task2.Interface;
 
+import Task2.Interface.IFaculty;
+import Task2.Interface.IStudent;
 import com.itextpdf.text.DocumentException;
 import org.pdfbox.exceptions.COSVisitorException;
 

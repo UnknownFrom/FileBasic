@@ -1,5 +1,7 @@
 package Task2;
 
+import Task2.Classes.*;
+import Task2.Interface.IUniversity;
 import com.itextpdf.text.DocumentException;
 import org.json.simple.parser.ParseException;
 import org.pdfbox.exceptions.COSVisitorException;
@@ -31,8 +33,8 @@ public class Programm {
         String pathFaculty = new Scanner(System.in).nextLine();
         System.out.println("Введите путь к файлу студентов:");
         String pathStudent = new Scanner(System.in).nextLine();
-        pathFaculty = "C:\\Users\\Pavel\\OneDrive - vyatsu\\5 семестр\\Java\\Lab 2\\src\\Task2\\faculty.xml";
-        pathStudent = "C:\\Users\\Pavel\\OneDrive - vyatsu\\5 семестр\\Java\\Lab 2\\src\\Task2\\students.xml";
+        pathFaculty = "C:\\Users\\Pavel\\OneDrive - vyatsu\\5 семестр\\Java\\Lab 2\\src\\Task2\\data\\faculty.xml";
+        pathStudent = "C:\\Users\\Pavel\\OneDrive - vyatsu\\5 семестр\\Java\\Lab 2\\src\\Task2\\data\\students.xml";
         extentsion.getReader().read(university, pathFaculty, pathStudent); /*заносим данные*/
         university.NotifyFacultyPDF(); /*высылаем оповещения по всем факультетам*/
         university.NotifyFaculty(); /*высылаем оповещения по всем факультетам*/

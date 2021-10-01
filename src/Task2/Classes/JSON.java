@@ -1,5 +1,7 @@
-package Task2;
+package Task2.Classes;
 
+import Task2.Interface.IReader;
+import Task2.Interface.IUniversity;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,7 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class JSON implements IReader{
+public class JSON implements IReader {
     @Override
     public void read(IUniversity university, String pathFaculty, String pathStudent) throws IOException, ParseException {
         ToReadFacultiesFromJSON(university, pathFaculty);

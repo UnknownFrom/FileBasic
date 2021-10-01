@@ -1,4 +1,4 @@
-package Task2;
+package Task2.Interface;
 
 import org.json.simple.parser.ParseException;
 import org.xml.sax.SAXException;

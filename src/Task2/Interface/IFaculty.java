@@ -1,4 +1,4 @@
-package Task2;
+package Task2.Interface;
 
 import com.itextpdf.text.DocumentException;
 import org.pdfbox.exceptions.COSVisitorException;

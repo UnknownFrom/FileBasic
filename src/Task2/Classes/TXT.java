@@ -1,11 +1,18 @@
-package Task2;
+package Task2.Classes;
+
+import Task2.Classes.Faculty;
+import Task2.Classes.Student;
+import Task2.Interface.IFaculty;
+import Task2.Interface.IReader;
+import Task2.Interface.IStudent;
+import Task2.Interface.IUniversity;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class TXT implements IReader{
+public class TXT implements IReader {
     @Override
     public void read(IUniversity university, String pathFaculty, String pathStudent) throws IOException{
         ToFillFaculties(university, pathFaculty);

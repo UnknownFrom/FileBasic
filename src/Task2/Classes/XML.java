@@ -1,5 +1,9 @@
-package Task2;
+package Task2.Classes;
 
+import Task2.Classes.Faculty;
+import Task2.Classes.Student;
+import Task2.Interface.IReader;
+import Task2.Interface.IUniversity;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -13,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class XML implements IReader{
+public class XML implements IReader {
 
     @Override
     public void read(IUniversity university, String pathFaculty, String pathStudent) throws ParserConfigurationException, IOException, SAXException {

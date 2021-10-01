@@ -1,5 +1,7 @@
-package Task2;
+package Task2.Classes;
 
+import Task2.Interface.IFaculty;
+import Task2.Interface.IStudent;
 import com.itextpdf.text.DocumentException;
 import org.pdfbox.exceptions.COSVisitorException;
 
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Faculty implements IFaculty{
+public class Faculty implements IFaculty {
     private List<IStudent> students;
     private String name;
     private HashMap<String, Integer> disciplines;
