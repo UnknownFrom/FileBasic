@@ -60,7 +60,14 @@ public class Program
                 case 11:
                     System.out.print("Название подкаталога:");
                     name = new Scanner(System.in).nextLine();
-                    dir.checkFindSubdir(name);
+                    if(dir.checkFindSubdir(name))
+                    {
+                        System.out.println("Нашлось");
+                    }
+                    else
+                    {
+                        System.out.println("Не нашлось");
+                    }
                     break;
             }
         }

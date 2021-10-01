@@ -1,5 +1,8 @@
 package Task2;
 
+import com.itextpdf.text.DocumentException;
+import org.pdfbox.exceptions.COSVisitorException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +46,13 @@ public class Faculty implements IFaculty{
     public void NotifyStudent() throws IOException {
         for (IStudent student: students) {
             student.ToNotify(name);
+        }
+    }
+
+    @Override
+    public void NotifyStudentPDF() throws IOException, COSVisitorException, DocumentException {
+        for (IStudent student: students) {
+            student.ToNotifyPDF(name);
         }
     }
 }

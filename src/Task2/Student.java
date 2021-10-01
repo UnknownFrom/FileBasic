@@ -1,5 +1,10 @@
 package Task2;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,15 +38,15 @@ public class Student implements IStudent {
     @Override
     public void ToNotify(String faculty) throws IOException {
         String[] FIO = name.split("_");
-        String path = "C:\\Users\\Pavel\\OneDrive - vyatsu\\" +
-                "5 семестр\\Java\\Lab 2\\src\\Task2\\"+FIO[0]+FIO[1]+FIO[2]+".txt";
+        String path = /*"C:\\Users\\Pavel\\OneDrive - vyatsu\\" +
+                "5 семестр\\Java\\Lab 2\\src\\Task2\\"+*/FIO[0]+FIO[1]+FIO[2]+".txt";
         FileWriter fileWriter = new FileWriter(path);
         String letter = "Здравствуйте, " + FIO[0] + " " + FIO[1] + " " + FIO[2] +
                 ", вы поступили на следующие направления:\n";
         int i = 1;
         for (String nameFac: faculties) { /*пишем факультеты с нумерацией и без _*/
             letter += i + ") ";
-            for (String s:nameFac.split("_")) {
+            for (String s : nameFac.split("_")) {
                 letter += s + " ";
             }
             letter += "\n";
@@ -49,5 +54,38 @@ public class Student implements IStudent {
         }
         fileWriter.write(letter);
         fileWriter.flush();
+    }
+
+    @Override
+    public void ToNotifyPDF(String faculty) throws IOException, DocumentException {
+        String[] FIO = name.split("_");
+        String path = /*"C:\\Users\\Pavel\\OneDrive - vyatsu\\" +
+                "5 семестр\\Java\\Lab 2\\src\\Task2\\"+*/FIO[0]+FIO[1]+FIO[2]+".pdf";
+        FileWriter fileWriter = new FileWriter(path);
+        String letter = "Здравствуйте, " + FIO[0] + " " + FIO[1] + " " + FIO[2] +
+                ", вы поступили на следующие направления:\n";
+        int i = 1;
+        for (String nameFac: faculties) { /*пишем факультеты с нумерацией и без _*/
+            letter += i + ") ";
+            for (String s : nameFac.split("_")) {
+                letter += s + " ";
+            }
+            letter += "\n";
+            i++;
+        }
+        fileWriter.write(letter);
+        fileWriter.flush();
+
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream(path));
+
+        document.open();
+        String FONT = "C:\\Windows\\Fonts\\Arial.ttf";
+        BaseFont bf=BaseFont.createFont(FONT, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        Font font=new Font(bf,15,Font.NORMAL);
+        Paragraph chunk = new Paragraph(letter, font);
+
+        document.add(chunk);
+        document.close();
     }
 }

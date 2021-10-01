@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileFilter;
 
 public class WorkingDirectory {
     private static WorkingDirectory instance;
@@ -117,7 +116,7 @@ public class WorkingDirectory {
         directoryName = file.getParent();
     }
 
-    public void checkFindSubdir(String name)
+    public boolean checkFindSubdir(String name)
     {
         File file = new File(directoryName);
         String[] s = file.list();
@@ -128,15 +127,21 @@ public class WorkingDirectory {
                 if (s[i].equals(name))
                 {
                     System.out.println("Существует: " + directoryName + "\\" + s[i]);
+                    return true;
                 }
                 else
                 {
                     directoryName = directoryName + "\\" + s[i];
-                    checkFindSubdir(name);
+                    if(checkFindSubdir(name))
+                    {
+                        return true;
+                    }
                 }
             }
         }
         directoryName = file.getParent();
+        return false;
+
     }
 
 
