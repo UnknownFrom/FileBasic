@@ -11,6 +11,6 @@ public interface IFaculty {
     public HashMap<String, Integer> getDisciplines(); /*проходные баллы по дисциплинам*/
     public void AddStudent(IStudent stud);
     public void RemoveStudent(IStudent stud);
-    public void NotifyStudent() throws IOException, COSVisitorException, DocumentException;
-    public void NotifyStudentPDF() throws IOException, COSVisitorException, DocumentException;
+    //public void NotifyStudent() throws IOException, COSVisitorException, DocumentException;
+    //public void NotifyStudentPDF() throws IOException, COSVisitorException, DocumentException;
 }

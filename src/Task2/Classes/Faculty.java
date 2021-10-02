@@ -44,17 +44,17 @@ public class Faculty implements IFaculty {
         students.remove(stud);
     }
 
-    @Override
+    /*@Override
     public void NotifyStudent() throws IOException {
         for (IStudent student: students) {
-            student.ToNotify(name);
+            student.ToNotify();
         }
     }
 
     @Override
     public void NotifyStudentPDF() throws IOException, COSVisitorException, DocumentException {
         for (IStudent student: students) {
-            student.ToNotifyPDF(name);
+            student.ToNotifyPDF();
         }
-    }
+    }*/
 }

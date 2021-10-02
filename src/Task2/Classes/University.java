@@ -71,7 +71,7 @@ public class University implements IUniversity {
         faculties.remove(faculty);
     }
 
-    @Override
+    /*@Override
     public void NotifyFaculty() throws IOException, COSVisitorException, DocumentException {
         for (IFaculty faculty: faculties) {
             faculty.NotifyStudent();
@@ -82,6 +82,20 @@ public class University implements IUniversity {
     public void NotifyFacultyPDF() throws IOException, COSVisitorException, DocumentException {
         for (IFaculty faculty: faculties) {
             faculty.NotifyStudent();
+        }
+    }*/
+
+    @Override
+    public void NotifyFaculty() throws IOException, COSVisitorException, DocumentException {
+        for (IStudent student: students) {
+            student.ToNotify();
+        }
+    }
+
+    @Override
+    public void NotifyFacultyPDF() throws IOException, COSVisitorException, DocumentException {
+        for (IStudent student: students) {
+            student.ToNotifyPDF();
         }
     }
 }

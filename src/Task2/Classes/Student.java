@@ -37,7 +37,7 @@ public class Student implements IStudent {
     }
 
     @Override
-    public void ToNotify(String faculty) throws IOException {
+    public void ToNotify() throws IOException {
         String[] FIO = name.split("_");
         String path = /*"C:\\Users\\Pavel\\OneDrive - vyatsu\\" +
                 "5 семестр\\Java\\Lab 2\\src\\Task2\\"+*/FIO[0]+FIO[1]+FIO[2]+".txt";
@@ -58,7 +58,7 @@ public class Student implements IStudent {
     }
 
     @Override
-    public void ToNotifyPDF(String faculty) throws IOException, DocumentException {
+    public void ToNotifyPDF() throws IOException, DocumentException {
         String[] FIO = name.split("_");
         String path = /*"C:\\Users\\Pavel\\OneDrive - vyatsu\\" +
                 "5 семестр\\Java\\Lab 2\\src\\Task2\\"+*/FIO[0]+FIO[1]+FIO[2]+".pdf";
